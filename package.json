@@ -1,0 +1,32 @@
+{
+  "name": "socketlink",
+  "version": "0.0.0",
+  "author": {
+    "name": "Paulo Barcelos"
+  },
+  "description": "Connect remote apps with a dumb easy abstraction.",
+  "homepage": "https://github.com/paulobarcelos/SocketLink",
+  "dependencies": {
+    "mongoose" : "x",
+    "socket.io" : "x"
+  },
+  "keywords": [
+    "websockets",
+    "sockets",
+    "connection",
+    "link"
+  ],
+  "license": "WTFPL",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/paulobarcelos/SocketLink.git"
+  },
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "readme": "#SocketLink\nConnect remote apps with a dumb easy abstraction.\n",
+  "bugs": {
+    "url": "https://github.com/paulobarcelos/SocketLink/issues"
+  }
+}
