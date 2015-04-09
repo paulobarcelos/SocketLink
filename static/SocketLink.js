@@ -1,23 +1,20 @@
-define(
-[
-],
-function (
-){
-	var io = {}
-	var SocketLink = function(group, uuid) {
+(function (){
+
+	var ioServer = {}
+	var SocketLink = function( group, uuid ) {
 	
 		var self = this,
 		socket,
 		callbacks = {};
 
 		var connect = function (host) {
-			if(!io[host]){
-				require([host + '/socket.io/socket.io.js'], function (socketio) {
-					io[host] = socketio;
-					connectSocket(socketio, host)
+			if(!ioServer[host]){
+				loadScript(host + '/socket.io/socket.io.js', function (socketio) {
+					ioServer[host] = socketio || io;
+					connectSocket(ioServer[host], host)
 				})
 			}
-			else connectSocket(io[host], host)			
+			else connectSocket(ioServer[host], host)			
 		}
 		var connectSocket = function (socketio, host) {
 			socket = socketio.connect(host, {'force new connection': true});
@@ -92,6 +89,26 @@ function (
 		var getSocket = function () {
 			return socket;
 		}
+		var loadScript = function(url, callback){
+			if(typeof require !== 'undefined'){
+				require([url], callback);
+				return;
+			}
+			// Adding the script tag to the head as suggested before
+			var head = document.getElementsByTagName('head')[0];
+			var script = document.createElement('script');
+			script.type = 'text/javascript';
+			script.src = url;
+
+			console.log('aaaa', script)
+			// Then bind the event to the callback function.
+			// There are several events for cross browser compatibility.
+			script.onreadystatechange = callback;
+			script.onload = callback;
+
+			// Fire the loading
+			head.appendChild(script);
+		}
 
 		Object.defineProperty(self, 'connect', {
 			value: connect
@@ -110,5 +127,15 @@ function (
 		});
 
 	}
-	return SocketLink;
-});
+
+	if(typeof define !== 'undefined'){
+		define([], function(){
+			return SocketLink;
+		});
+	}
+	else if (typeof exports !== 'undefined'){
+		exports.SocketLink = SocketLink;
+	}
+	else window.SocketLink = SocketLink;
+
+})();
