@@ -331,8 +331,8 @@ var storeInteraction = function(group, data){
 	});
 }
 
-var start = function (port, mongoUrl) {
-	var server = io.listen(port);
+var start = function (_server, mongoUrl) {
+	var server = io.listen(_server);
 	server.set('log level', 1)
 
 	connectMongoose(mongoUrl);
