@@ -10,8 +10,18 @@
 		var connect = function (host) {
 			if(!ioServer[host]){
 				loadScript(host + '/socket.io/socket.io.js', function (socketio) {
-					ioServer[host] = socketio || window.io;
-					connectSocket(ioServer[host], host)
+					ioServer[host] = socketio;
+					if(!ioServer[host]){
+						var waitForIo = function(){
+							if(window.io){
+								ioServer[host] = window.io;
+								connectSocket(ioServer[host], host)
+							}
+							else setTimeout(waitForIo, 100)
+						}
+						waitForIo();
+					}
+					else connectSocket(ioServer[host], host)
 				})
 			}
 			else connectSocket(ioServer[host], host)			
@@ -100,14 +110,11 @@
 			script.type = 'text/javascript';
 			script.src = url;
 
-			console.log('aaaa', script)
-			// Then bind the event to the callback function.
-			// There are several events for cross browser compatibility.
-			script.onreadystatechange = callback;
-			script.onload = callback;
 
 			// Fire the loading
 			head.appendChild(script);
+
+			setTimeout(callback, 100)
 		}
 
 		Object.defineProperty(self, 'connect', {
