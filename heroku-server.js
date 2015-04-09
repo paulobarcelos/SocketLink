@@ -22,4 +22,4 @@ fs.readFile(__dirname + '/static' + req.url, function (err,data) {
 var socketLinkSever = require('./index');
 
 
-socketLinkSever.start(server, process.env.MONGOLAB_URI || process.env.MONGOHQ_URL || 'mongodb://localhost:27017/bond' )
+socketLinkSever.start(server, process.env.MONGOLAB_URI || process.env.MONGOHQ_URL || 'mongodb://localhost:27017/socketlink' )
