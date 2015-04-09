@@ -91,7 +91,7 @@ var Client = function(providedUuid, providedGroup, clientsRegistry, onDBReadyCal
 		}
 		else {
 			log('No uuid was provided .');
-			generateDBEntry();
+			generateDBEntry(null, providedGroup);
 		}
 	}
 	var generateDBEntry = function (_uuid, _group) {
