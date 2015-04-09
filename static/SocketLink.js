@@ -10,7 +10,7 @@
 		var connect = function (host) {
 			if(!ioServer[host]){
 				loadScript(host + '/socket.io/socket.io.js', function (socketio) {
-					ioServer[host] = socketio || io;
+					ioServer[host] = socketio || window.io;
 					connectSocket(ioServer[host], host)
 				})
 			}
